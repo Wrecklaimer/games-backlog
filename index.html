@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="gamesBacklogApp" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="app/assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="app/assets/css/site.css" rel="stylesheet">
+        <title>Games Backlog</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="#" class="navbar-brand">
+                        <i class="glyphicon glyphicon-check"></i> Games Backlog
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div ng-view ></div>
+        </div>
+
+        <script src="app/assets/js/angular.min.js"></script>
+        <script src="app/assets/js/angular-route.min.js"></script>
+        <script src="app/app.js"></script>      
+
+    </body>
+</html>
