@@ -1,0 +1,63 @@
+<div class="row">
+	<div class="col-md-12">
+		<header>
+			<h3>Edit Game</h3>
+		</header>
+		<form role="form" name="gameForm" class="form-horizontal">
+			<div class= "form-group" ng-class="{error: myForm.title.$invalid}">
+				<label class= "col-md-2">Title</label>
+				<div class="col-md-4">
+					<input name="title" ng-model="game.title" type= "text" class= "form-control" placeholder="Super Mario World" required />
+				</div>
+			</div>
+			<div class= "form-group">
+				<label class= "col-md-2">Release Date</label>
+				<div class="col-md-4">
+					<input name="date" ng-model="game.release_date" type="date" class="form-control" placeholder="1999-01-01" required />
+				</div>
+			</div>
+			<div class= "form-group">
+				<label class= "col-md-2">Platform</label>
+				<div class="col-md-4">
+					<input name="platform" ng-model="game.platform" type="text" class="form-control" placeholder="Platform"/>
+				</div>
+			</div>
+			<div class= "form-group">
+				<label class= "col-md-2">Genre</label>
+				<div class="col-md-4">
+					<input name="genre" ng-model="game.genre" type="text" class="form-control" placeholder="Genre"/>
+				</div>
+			</div>
+			<div class= "form-group">
+				<label class= "col-md-2">Status</label>
+				<div class="col-md-4">
+					<select name="status" ng-model="game.current_status" class="form-control">
+						<option value="Not Started">Not Started</option>
+						<option value="Started">Started</option>
+						<option value="Finished">Finished</option>
+					</select>
+				</div>
+			</div>
+			<div class= "form-group">
+				<label class= "col-md-2">Interest</label>
+				<div class="col-md-4">
+					<select name="interest" ng-model="game.interest" class="form-control">
+						<option value="Low">Low</option>
+						<option value="Medium">Medium</option>
+						<option value="High">High</option>
+						<option value="None">None</option>
+					</select>
+				</div>
+			</div>
+			<div class= "form-group">
+				<label class= "col-md-2"></label>
+				<div class="col-md-4">
+					<a href="#/" class="btn btn-default">Cancel</a>
+					<button ng-click="updateGame(game);" 
+				ng-disabled="isClean() || myForm.$invalid"
+				class="btn btn-primary">Update</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

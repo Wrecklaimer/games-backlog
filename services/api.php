@@ -51,8 +51,7 @@
 			$query = "
 			SELECT DISTINCT * 
 			FROM games
-			ORDER BY game_id DESC
-			";
+			ORDER BY game_id DESC";
 			$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
 
 			if ($r->num_rows > 0) {
@@ -66,6 +65,64 @@
 			}
 
 			$this->response('', 204);
+		}
+
+		private function game() {
+			if ($this->get_request_method() != "GET") {
+				$this->response('', 405); // Method not allowed
+			}
+
+			$id = (int)$this->_request['id'];
+				
+			if ($id > 0) {	
+				$query = "
+				SELECT DISTINCT * 
+				FROM games
+				WHERE game_id = $id";
+				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
+
+				if ($r->num_rows > 0) {
+					$result = $r->fetch_assoc();	
+					$this->response($this->json($result), 200);
+				}
+			}
+
+			$this->response('', 204);
+		}
+
+		private function updateGame(){
+			if ($this->get_request_method() != "POST") {
+				$this->response('', 405); // Method not allowed
+			}
+
+			$data = json_decode(file_get_contents("php://input"), true);
+			$id = (int)$data['id'];
+			$column_names = array('title', 'release_date', 'platform', 'genre', 'current_status', 'interest');
+			$keys = array_keys($data['game']);
+			$columns = '';
+			$values = '';
+
+			foreach ($column_names as $desired_key) {
+				if (!in_array($desired_key, $keys)) {
+					$$desired_key = '';
+				} else {
+					$$desired_key = $data['game'][$desired_key];
+				}
+				$columns = $columns.$desired_key."='".$$desired_key."',";
+			}
+
+			$query = "
+			UPDATE games 
+			SET ".trim($columns, ',')." 
+			WHERE game_id = $id";
+			
+			if (!empty($data)) {
+				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
+				$success = array('status' => "Success", "msg" => "Game ".$id." updated successfully.", "data" => $data);
+				$this->response($this->json($success), 200);
+			} else {
+				$this->response('', 204);
+			}
 		}
 
 		private function json($data) {
