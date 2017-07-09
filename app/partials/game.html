@@ -7,7 +7,7 @@
 			<div class= "form-group" ng-class="{error: myForm.title.$invalid}">
 				<label class= "col-md-2">Title</label>
 				<div class="col-md-4">
-					<input name="title" ng-model="game.title" type= "text" class= "form-control" placeholder="Super Mario World" required />
+					<input name="title" ng-model="game.title" type= "text" class= "form-control" placeholder="Super Mario World" autofocus required />
 				</div>
 			</div>
 			<div class= "form-group">
@@ -56,6 +56,7 @@
 					<button ng-click="saveGame(game);" 
 				ng-disabled="isClean() || myForm.$invalid"
 				class="btn btn-primary">Save</button>
+					<button ng-click="deleteGame()" ng-show="game.game_id" class="btn btn-danger">Delete</button>
 				</div>
 			</div>
 		</form>

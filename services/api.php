@@ -163,6 +163,25 @@
 			}
 		}
 
+		private function deleteGame() {
+			if ($this->get_request_method() != "DELETE") {
+				$this->response('', 405); // Method not allowed
+			}
+
+			$id = (int)$this->_request['id'];
+
+			if ($id > 0) {				
+				$query="
+				DELETE FROM games 
+				WHERE game_id = $id";
+				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
+				$success = array('status' => "Success", "msg" => "Game ".$id." deleted successfully.");
+				$this->response($this->json($success), 200);
+			} else {
+				$this->response('', 204);
+			}
+		}
+
 		private function json($data) {
 			return json_encode($data);
 		}

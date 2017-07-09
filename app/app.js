@@ -20,6 +20,10 @@ app.factory('services', ['$http', function($http) {
 		return $http.post(serviceBase + 'updateGame', {id:id, game:game});
 	};
 
+	api.deleteGame = function (id) {
+		return $http.delete(serviceBase + 'deleteGame?id=' + id);
+	};
+
 	return api;
 }]);
 
@@ -52,6 +56,17 @@ app.controller('GameCtrl', ['$scope', '$rootScope', '$location', '$routeParams',
 			.success(function (data) {
 				$location.path('/');
 			});
+		}
+	};
+
+	$scope.deleteGame = function () {
+		if (gameID > 0) {
+			if (confirm('Are you sure you want to delete game \'' + $scope.game.title + '\'?')) {
+				services.deleteGame(gameID)
+				.success(function (data) {
+					$location.path('/');
+				});
+			}
 		}
 	};
 }]);
