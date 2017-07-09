@@ -90,15 +90,53 @@
 			$this->response('', 204);
 		}
 
-		private function updateGame(){
+		private function insertGame() {
+			if ($this->get_request_method() != "POST") {
+				$this->response('', 405); // Method not allowed
+			}
+
+			$data = json_decode(file_get_contents("php://input"), true);
+			$game = $data['game'];
+			$column_names = array('title', 'release_date', 'platform', 'genre', 'current_status', 'interest');
+			$keys = array_keys($game);
+			$columns = '';
+			$values = '';
+
+			foreach ($column_names as $desired_key) {
+				if (!in_array($desired_key, $keys)) {
+			   		$$desired_key = '';
+				} else {
+					$$desired_key = $game[$desired_key];
+				}
+
+				$columns = $columns.$desired_key.',';
+				$values = $values."'".$$desired_key."',";
+			}
+
+			$query = "
+			INSERT INTO games 
+			(".trim($columns, ',').") 
+			VALUES (".trim($values, ',').")";
+			
+			if (!empty($data)) {
+				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
+				$success = array('status' => "Success", "msg" => "Game ".$id." inserted successfully.", "data" => $data);
+				$this->response($this->json($success), 200);
+			} else {
+				$this->response('', 204);
+			}
+		}
+
+		private function updateGame() {
 			if ($this->get_request_method() != "POST") {
 				$this->response('', 405); // Method not allowed
 			}
 
 			$data = json_decode(file_get_contents("php://input"), true);
 			$id = (int)$data['id'];
+			$game = $data['game'];
 			$column_names = array('title', 'release_date', 'platform', 'genre', 'current_status', 'interest');
-			$keys = array_keys($data['game']);
+			$keys = array_keys($game);
 			$columns = '';
 			$values = '';
 
@@ -106,7 +144,7 @@
 				if (!in_array($desired_key, $keys)) {
 					$$desired_key = '';
 				} else {
-					$$desired_key = $data['game'][$desired_key];
+					$$desired_key = $game[$desired_key];
 				}
 				$columns = $columns.$desired_key."='".$$desired_key."',";
 			}

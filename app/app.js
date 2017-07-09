@@ -12,6 +12,10 @@ app.factory('services', ['$http', function($http) {
 		return $http.get(serviceBase + 'game?id=' + id);
 	};
 
+	api.insertGame = function (game) {
+		return $http.post(serviceBase + 'insertGame', {game:game});
+	};
+
 	api.updateGame = function (id, game) {
 		return $http.post(serviceBase + 'updateGame', {id:id, game:game});
 	};
@@ -27,6 +31,7 @@ app.controller('GamesCtrl', ['$scope', 'services', function ($scope, services) {
 
 app.controller('GameCtrl', ['$scope', '$rootScope', '$location', '$routeParams', 'services', 'game', function ($scope, $rootScope, $location, $routeParams, services, game) {
 	var gameID = $routeParams.id;
+	$rootScope.title = (gameID > 0) ? 'Edit Game' : 'Add Game';
 	var original = game.data;
 	original.game_id = gameID;
 	$scope.game = angular.copy(original);
@@ -36,14 +41,19 @@ app.controller('GameCtrl', ['$scope', '$rootScope', '$location', '$routeParams',
 		return angular.equals(original, $scope.game);
 	};
 
-	$scope.updateGame = function (game) {
-        if (gameID > 0) {
-            services.updateGame(gameID, game)
-            .success(function (data) {
+	$scope.saveGame = function (game) {
+		if (gameID > 0) { // Update existing
+			services.updateGame(gameID, game)
+			.success(function (data) {
 				$location.path('/');
-            });
-        }
-    };
+			});
+		} else { // Add new
+			services.insertGame(game)
+			.success(function (data) {
+				$location.path('/');
+			});
+		}
+	};
 }]);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
