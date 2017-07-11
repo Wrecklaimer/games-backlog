@@ -36,25 +36,30 @@ app.controller('GamesCtrl', ['$scope', 'services', function ($scope, services) {
 app.controller('GameCtrl', ['$scope', '$rootScope', '$location', '$routeParams', 'services', 'game', function ($scope, $rootScope, $location, $routeParams, services, game) {
 	var gameID = $routeParams.id;
 	$rootScope.title = (gameID > 0) ? 'Edit Game' : 'Add Game';
-	var original = game.data;
-	original.game_id = gameID;
-	$scope.game = angular.copy(original);
-	$scope.game.game_id = gameID;
+	$scope.game = game.data ? game.data : {};
+	$scope.releaseDate = parseIsoLocal($scope.game.release_date);
 
-	$scope.isClean = function() {
-		return angular.equals(original, $scope.game);
+	$scope.dateChanged = function() {
+		if (angular.isUndefined($scope.releaseDate))
+			return;
+
+		$scope.game.release_date = toIsoString($scope.releaseDate);
 	};
 
 	$scope.saveGame = function (game) {
 		if (gameID > 0) { // Update existing
 			services.updateGame(gameID, game)
-			.success(function (data) {
+			.then(function onSuccess(response) {
 				$location.path('/');
+			}).catch(function onError(response) {
+				console.log(response);
 			});
 		} else { // Add new
 			services.insertGame(game)
-			.success(function (data) {
+			.then(function onSuccess(response) {
 				$location.path('/');
+			}).catch(function onError(response) {
+				console.log(response);
 			});
 		}
 	};
@@ -63,12 +68,33 @@ app.controller('GameCtrl', ['$scope', '$rootScope', '$location', '$routeParams',
 		if (gameID > 0) {
 			if (confirm('Are you sure you want to delete game \'' + $scope.game.title + '\'?')) {
 				services.deleteGame(gameID)
-				.success(function (data) {
+				.then(function onSuccess(response) {
 					$location.path('/');
-				});
+				}).catch(function onError(response) {});
 			}
 		}
 	};
+
+	function parseIsoLocal(string) {
+		if (angular.isUndefined(string))
+			return undefined;
+
+		var b = string.split(/\D/);
+		return new Date(b[0], b[1]-1, b[2]);
+	}
+
+	function toIsoString(date) {
+		year = date.getFullYear();
+		month = date.getMonth()+1;
+		dt = date.getDate();
+
+		if (dt < 10)
+			dt = '0' + dt;
+		if (month < 10)
+			month = '0' + month;
+
+		return (year + '-' + month + '-' + dt);
+	}
 }]);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {

@@ -120,7 +120,7 @@
 			
 			if (!empty($data)) {
 				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
-				$success = array('status' => "Success", "msg" => "Game ".$id." inserted successfully.", "data" => $data);
+				$success = array('status' => 'Success', 'msg' => 'Game inserted successfully.', 'data' => $data);
 				$this->response($this->json($success), 200);
 			} else {
 				$this->response('', 204);
@@ -156,7 +156,7 @@
 			
 			if (!empty($data)) {
 				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
-				$success = array('status' => "Success", "msg" => "Game ".$id." updated successfully.", "data" => $data);
+				$success = array('status' => 'Success', 'msg' => 'Game '.$id.' updated successfully.', 'data' => $data);
 				$this->response($this->json($success), 200);
 			} else {
 				$this->response('', 204);
@@ -175,7 +175,7 @@
 				DELETE FROM games 
 				WHERE game_id = $id";
 				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
-				$success = array('status' => "Success", "msg" => "Game ".$id." deleted successfully.");
+				$success = array('status' => 'Success', 'msg' => 'Game '.$id.' deleted successfully.');
 				$this->response($this->json($success), 200);
 			} else {
 				$this->response('', 204);
