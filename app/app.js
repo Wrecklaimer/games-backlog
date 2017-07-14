@@ -28,9 +28,15 @@ app.factory('services', ['$http', function($http) {
 }]);
 
 app.controller('GamesCtrl', ['$scope', 'services', function ($scope, services) {
+	$scope.search = {};
+
 	services.getGames().then(function(games) {
 		$scope.games = games.data;
 	});
+
+	$scope.clearSearch = function() {
+		$scope.search = {};
+	};
 }]);
 
 app.controller('GameCtrl', ['$scope', '$rootScope', '$location', '$routeParams', 'services', 'game', function ($scope, $rootScope, $location, $routeParams, services, game) {
