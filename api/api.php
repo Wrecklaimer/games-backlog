@@ -1,14 +1,10 @@
 <?php
 	require_once("rest.inc.php");
+	require_once('config.php');
 	
 	class API extends REST {
 	
 		public $data = "";
-		
-		const DB_SERVER = "127.0.0.1";
-		const DB_USER = "root";
-		const DB_PASSWORD = "";
-		const DB = "games_backlog";
 
 		private $mysqli = NULL;
 
@@ -18,7 +14,7 @@
 		}
 		
 		private function connect() {
-			$this->mysqli = new mysqli(self::DB_SERVER, self::DB_USER, self::DB_PASSWORD, self::DB);
+			$this->mysqli = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME);
 		}
 		
 		public function processApi(){

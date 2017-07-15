@@ -1,23 +1,23 @@
 angular.module('app.services').service('apiService', function($http) {
-	var serviceBase = 'services/';
+	var apiBase = 'api/';
 
 	this.getGames = function() {
-		return $http.get(serviceBase + 'games');
+		return $http.get(apiBase + 'games');
 	};
 
 	this.getGame = function (id) {
-		return $http.get(serviceBase + 'game?id=' + id);
+		return $http.get(apiBase + 'game?id=' + id);
 	};
 
 	this.insertGame = function (game) {
-		return $http.post(serviceBase + 'insertGame', {game:game});
+		return $http.post(apiBase + 'insertGame', {game:game});
 	};
 
 	this.updateGame = function (id, game) {
-		return $http.post(serviceBase + 'updateGame', {id:id, game:game});
+		return $http.post(apiBase + 'updateGame', {id:id, game:game});
 	};
 
 	this.deleteGame = function (id) {
-		return $http.delete(serviceBase + 'deleteGame?id=' + id);
+		return $http.delete(apiBase + 'deleteGame?id=' + id);
 	};
 });
