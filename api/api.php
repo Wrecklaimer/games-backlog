@@ -192,6 +192,54 @@
 			}
 		}
 
+		private function gameStatuses() {	
+			if ($this->get_request_method() != "GET") {
+				$this->response('', 405); // Method not allowed
+			}
+
+			$query = "
+			SELECT DISTINCT * 
+			FROM game_statuses
+			ORDER BY status_id ASC";
+			$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
+
+			if ($r->num_rows > 0) {
+				$result = array();
+
+				while ($row = $r->fetch_assoc()) {
+					$result[] = $row;
+				}
+
+				$this->response($this->json($result), 200);
+			}
+
+			$this->response('', 204);
+		}
+
+		private function interestLevels() {	
+			if ($this->get_request_method() != "GET") {
+				$this->response('', 405); // Method not allowed
+			}
+
+			$query = "
+			SELECT DISTINCT * 
+			FROM interest_levels
+			ORDER BY interest_id ASC";
+			$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
+
+			if ($r->num_rows > 0) {
+				$result = array();
+
+				while ($row = $r->fetch_assoc()) {
+					$result[] = $row;
+				}
+
+				$this->response($this->json($result), 200);
+			}
+
+			$this->response('', 204);
+		}
+
 		private function json($data) {
 			return json_encode($data);
 		}

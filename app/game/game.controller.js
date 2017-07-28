@@ -5,6 +5,14 @@ angular.module('app.controllers').controller('GameCtrl', ['$scope', '$rootScope'
 	$scope.game = game.data ? game.data : {};
 	$scope.releaseDate = parseIsoLocal($scope.game.release_date);
 
+	apiService.getGameStatuses().then(function(response) {
+		$scope.statuses = response.data;
+	});
+
+	apiService.getInterestLevels().then(function(response) {
+		$scope.interests = response.data;
+	});
+
 	$scope.dateChanged = function() {
 		if (angular.isUndefined($scope.releaseDate))
 			return;

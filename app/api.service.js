@@ -20,4 +20,12 @@ angular.module('app.services').service('apiService', function($http) {
 	this.deleteGame = function (id) {
 		return $http.delete(apiBase + 'deleteGame?id=' + id);
 	};
+
+	this.getGameStatuses = function() {
+		return $http.get(apiBase + 'gameStatuses');
+	};
+
+	this.getInterestLevels = function() {
+		return $http.get(apiBase + 'interestLevels');
+	};
 });

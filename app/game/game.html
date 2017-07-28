@@ -32,9 +32,7 @@
 				<label class= "col-md-2">Status</label>
 				<div class="col-md-4">
 					<select name="status" ng-model="game.game_status_id" class="form-control">
-						<option value="0">Not Started</option>
-						<option value="1">Started</option>
-						<option value="2">Finished</option>
+						<option ng-repeat="status in statuses" value="{{status.status_id}}">{{status.game_status}}</option>
 					</select>
 				</div>
 			</div>
@@ -42,10 +40,7 @@
 				<label class= "col-md-2">Interest</label>
 				<div class="col-md-4">
 					<select name="interest" ng-model="game.interest_level_id" class="form-control">
-						<option value="0">None</option>
-						<option value="1">Low</option>
-						<option value="2">Medium</option>
-						<option value="3">High</option>
+						<option ng-repeat="il in interests" value="{{il.interest_id}}">{{il.interest_level}}</option>
 					</select>
 				</div>
 			</div>
