@@ -40,11 +40,11 @@
 			return ($status[$this->_code]) ? $status[$this->_code] : $status[500];
 		}
 		
-		public function get_request_method(){
+		public function get_request_method() {
 			return $_SERVER['REQUEST_METHOD'];
 		}
 		
-		private function inputs(){
+		private function inputs() {
 			switch($this->get_request_method()) {
 				case "POST":
 					$this->_request = $this->cleanInputs($_POST);

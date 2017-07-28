@@ -46,7 +46,7 @@
 
 			$query = "
 			SELECT DISTINCT * 
-			FROM games
+			FROM games_view
 			ORDER BY game_id DESC";
 			$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
 
@@ -93,7 +93,14 @@
 
 			$data = json_decode(file_get_contents("php://input"), true);
 			$game = $data['game'];
-			$column_names = array('title', 'release_date', 'platform', 'genre', 'current_status', 'interest');
+			$column_names = array(
+				'title', 
+				'release_date', 
+				'platform', 
+				'genre', 
+				'game_status_id', 
+				'interest_level_id'
+				);
 			$keys = array_keys($game);
 			$columns = '';
 			$values = '';
@@ -131,7 +138,14 @@
 			$data = json_decode(file_get_contents("php://input"), true);
 			$id = (int)$data['id'];
 			$game = $data['game'];
-			$column_names = array('title', 'release_date', 'platform', 'genre', 'current_status', 'interest');
+			$column_names = array(
+				'title', 
+				'release_date', 
+				'platform', 
+				'genre', 
+				'game_status_id', 
+				'interest_level_id'
+				);
 			$keys = array_keys($game);
 			$columns = '';
 			$values = '';
