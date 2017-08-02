@@ -37,3 +37,12 @@ SELECT
 FROM games
 LEFT JOIN game_statuses AS gstat ON games.game_status_id = gstat.status_id
 LEFT JOIN interest_levels AS ilvl ON games.interest_level_id = ilvl.interest_id
+
+INSERT INTO game_statuses VALUES (0, 'Not Started');
+INSERT INTO game_statuses VALUES (1, 'Started');
+INSERT INTO game_statuses VALUES (2, 'Finished');
+
+INSERT INTO interest_levels VALUES (0, 'None');
+INSERT INTO interest_levels VALUES (1, 'Low');
+INSERT INTO interest_levels VALUES (2, 'Medium');
+INSERT INTO interest_levels VALUES (3, 'High');
