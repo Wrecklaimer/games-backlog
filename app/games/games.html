@@ -11,6 +11,8 @@
 			<div class="form-group pull-right">
 				<a href="#!/game/0" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Add Game</a>
 			</div>
+			<div class="form-group">
+				<label><input type="checkbox" ng-model="hideFinished"/> Hide Finished</label>
 		</div>
 		<table class="table table-striped table-bordered" ng-show="games.length > 0">
 			<thead>
@@ -28,7 +30,7 @@
 				<th>Interest</th>
 			</thead>
 			<tbody>
-				<tr ng-repeat="game in games | orderBy:sort.type:sort.reverse | filter:search">
+				<tr ng-repeat="game in games | orderBy:sort.type:sort.reverse | filter: filterGames">
 					<td><a href="#!/game/{{game.game_id}}">{{game.title}}</a></td>
 					<td>{{game.release_date | date:'yyyy-MM-dd'}}</td>
 					<td>{{game.platform}}</td>
