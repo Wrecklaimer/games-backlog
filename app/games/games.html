@@ -17,12 +17,10 @@
 		<table class="table table-striped table-bordered" ng-show="games.length > 0">
 			<thead>
 				<th ng-click="sortBy('title')">
-					Title <span ng-show="sort.type == 'title' && !sort.reverse" class="glyphicon glyphicon-sort-by-attributes"></span>
-			<span ng-show="sort.type == 'title' && sort.reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+					Title <span ng-class="{'glyphicon-sort-by-attributes-alt' : sort.reverse && sort.type == 'title', 'text-muted' : sort.type !== 'title'}" class="glyphicon glyphicon-sort-by-attributes pull-right"></span>
 				</th>
 				<th ng-click="sortBy('release_date')">
-					Release Date <span ng-show="sort.type == 'release_date' && !sort.reverse" class="glyphicon glyphicon-sort-by-attributes"></span>
-			<span ng-show="sort.type == 'release_date' && sort.reverse" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+					Release Date <span ng-class="{'glyphicon-sort-by-attributes-alt' : sort.reverse && sort.type == 'release_date', 'text-muted' : sort.type !== 'release_date'}" class="glyphicon glyphicon-sort-by-attributes pull-right"></span>
 				</th>
 				<th>Platform</th>
 				<th>Genre</th>
